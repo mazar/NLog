@@ -47,7 +47,7 @@ namespace NLog
     /// <summary>
     /// Represents the logging event.
     /// </summary>
-    public class LogEventInfo
+    public class LogEventInfo : IDisposable
     {
         /// <summary>
         /// Gets the date of the first log event created.
@@ -460,5 +460,23 @@ namespace NLog
             this.properties = new Dictionary<object, object>();
             this.eventContextAdapter = new DictionaryAdapter<object, object>(this.properties);
         }
+
+        /// <summary>
+        /// Dispose of the resources
+        /// </summary>
+        public void Dispose()
+        {
+            this.Message = string.Empty;
+            this.formattedMessage = string.Empty;
+            if (this.layoutCache != null)
+                this.layoutCache.Clear();
+            if (this.Parameters != null)
+                this.Parameters = null;
+            if (this.properties != null)
+                this.properties.Clear();
+            if (this.eventContextAdapter != null)
+                this.eventContextAdapter.Clear();
+        }
+
     }
 }

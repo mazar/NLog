@@ -99,6 +99,9 @@ namespace NLog
                     break;
                 }
             }
+            
+            // Destroy the objects
+            logEvent.Dispose();
         }
 
 #if !NET_CF
